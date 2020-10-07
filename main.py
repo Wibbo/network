@@ -39,21 +39,24 @@ random_friend = rnd.choice(friends)
 for neighbours in g.neighbors(random_friend):
     count += 1
 
-print(f'Random person {random_friend.id} has {count} friends.')
+# print(f'Random person {random_friend.id} has {count} friends.')
 
 more_friends = 0
+total_friends = 0
+friend_count = 0
 
+# Loop through all the selected person's friends.
 for friend in g.neighbors(random_friend):
-    friend_count = 0
+
+    # Loop through all the friends of each of the selected person's friends.
     for their_friends in g.neighbors(friend):
         friend_count += 1
-        
-    print(f'Friend {their_friends.id} has {friend_count} friends.')
+
     if friend_count > count:
         more_friends += 1
 
-print(f'{more_friends} people have more friends than the random person who has {count} friends.')
-
+print(f'Random person {random_friend.id} has {count} friends and they have a total of {friend_count} friends.')
+print(f'This is an average of {friend_count/count} friends each.')
 
 
 
