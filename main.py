@@ -4,17 +4,14 @@ import random as rnd
 from friend import friend 
 
 
-node_count = 100
+node_count = 20
 min_friends = 1
-max_friends = 20
+max_friends = 4 
 number_of_iterations = 20
 
 friends = []
 
 g = nx.Graph()
-
-#s = nx.utils.powerlaw_sequence(200, 3.5) #100 nodes, power-law exponent 2.5
-#G = nx.expected_degree_graph(s, selfloops=False)
 
 # Add nodes to the network.
 for i in range(node_count):
@@ -28,8 +25,8 @@ for friend in friends:
     for close_friend in close_friends:
         g.add_edge(friend, close_friend)
 
-#nx.draw(g, with_labels=False, font_weight='bold')
-#plt.show()
+nx.draw(g, with_labels=False, font_weight='bold')
+plt.show()
 
 friends_have_more_friends = 0
 
@@ -56,25 +53,7 @@ for person in g:
     if average_friends > selected_persons_friends_count:
         friends_have_more_friends += 1
 
-    print(f'The selected person has id {person.id}.')
-    print(f'The selected person has {selected_persons_friends_count} friends.')
-    print(f'The selected persons friends have a total of {friend_count} friends of their own.')
-    print(f'This is an average of {average_friends:.1f} friends each.')
 
-print(f'Iterations: {node_count}')
-print(f'Friends have more friends {friends_have_more_friends} times out of {node_count}')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+print(f'Number of nodes3: {node_count}')
+print(f'Friends have more friends {friends_have_more_friends} times out of {node_count}.')
+print(f'This equates to {friends_have_more_friends/node_count*100:.1f} percent of the time.')
