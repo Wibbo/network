@@ -4,12 +4,29 @@ import random as rnd
 from friend import friend 
 
 
-node_count =90
+node_count =12
 min_friends = 6
-max_friends = 30
+max_friends = 6
 generate_random = True
 friends = []
 graph_size = (18, 12)
+
+generated_nodes =[]
+
+def count_persons_friends(graph, person_node):
+
+    selected_persons_friends_count = 0
+
+    for _ in graph.neighbors(person_node):
+        selected_persons_friends_count += 1
+
+    return selected_persons_friends_count
+
+def generate_node_file():
+        personal_friends = rnd.randint(min_friends, max_friends)
+        
+
+
 
 def generate_random_network(net_graph, node_count, friend_list, min_friends, max_friends):
     """
@@ -28,12 +45,18 @@ def generate_random_network(net_graph, node_count, friend_list, min_friends, max
         net_graph.add_node(i, friend=friend(i))        
 
     for person in net_graph.nodes:
+        friend_count = count_persons_friends(graph, person)
         personal_friends = rnd.randint(min_friends, max_friends)
+
+        if friend_count >= personal_friends:
+            break
+
         close_friends = rnd.sample(list(net_graph.nodes()), personal_friends)
         
         for close_friend in close_friends:
-            if not net_graph.has_edge(person, close_friend):
-                if not net_graph.has_edge(close_friend, person):
+            if friend_count < personal_friends:
+
+                if not net_graph.has_edge(person, close_friend):
                     net_graph.add_edge(person, close_friend)
 
     return net_graph
@@ -55,14 +78,6 @@ def show_network(network_graph):
     plt.axis('off')
     plt.show()
 
-def count_persons_friends(graph, person_node):
-
-    selected_persons_friends_count = 0
-
-    for _ in graph.neighbors(person_node):
-        selected_persons_friends_count += 1
-
-    return selected_persons_friends_count
 
 
 
